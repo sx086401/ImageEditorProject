@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 實作程式與規劃資料流 等等
 盡量使用 react hooks 來實作
 css 樣式部分不必太講究 以功能為主
-這個 project 使用 CRA 建構  預設可以寫 ts tsx js jsx 等等
+這個 project 使用 CRA 建構   預設可以寫 ts tsx js jsx 等等
 可以依照習慣來挑選實作即可
 
 ## spec 說明圖片
