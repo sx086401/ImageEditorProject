@@ -2,12 +2,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## project 說明
 
-這個小 project 主要是看一下
-實作程式與規劃資料流 等等
-盡量使用 react hooks 來實作
-css 樣式部分不必太講究 以功能為主
-這個 project 使用 CRA 建構   預設可以寫 ts tsx js jsx 等等
-可以依照習慣來挑選實作即可
+這個小 project 主要是看一下<br>
+實作程式與規劃資料流 等等<br>
+盡量使用 react hooks 來實作<br>
+css 樣式部分不必太講究 以功能為主<br>
+這個 project 使用 CRA 建構   預設可以寫 ts tsx js jsx 等等<br>
+可以依照習慣來挑選實作即可<br>
 
 ## spec 說明圖片
 
