@@ -12,9 +12,9 @@ css 樣式部分不必太講究 以功能為主
 
 這個 project 使用 CRA 建構   預設可以寫 ts tsx js jsx 等等
 
-可以依照習慣來挑選實作即可<br>
+可以依照習慣來挑選實作即可
 
-在 develop 上開發完成後發個 PR 即可<br>
+在 develop 上開發完成後發個 PR 即可
 
 ## spec 說明圖片
 
