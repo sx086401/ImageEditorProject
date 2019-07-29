@@ -2,6 +2,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## project 說明
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/chatbotgang/ImageEditorProject.svg)](https://greenkeeper.io/)
+
 這個小 project 主要是看一下
 
 實作程式與規劃資料流 等等
