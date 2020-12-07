@@ -20,9 +20,9 @@ css 樣式部分不必太講究 以功能為主
 
 ## spec 說明圖片
 
-![image](https://github.com/chatbotgang/ImageEditorProject/blob/master/Q1.jpg)
+<img src="./Q1.jpg" />
 
-![image](https://github.com/chatbotgang/ImageEditorProject/blob/master/Q2.jpg)
+<img src="./Q2.jpg" />
 
 ## Available Scripts
 
