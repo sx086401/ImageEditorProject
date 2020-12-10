@@ -20,7 +20,7 @@ const useStyle = makeStyles({
 
 interface Props {
   imageSrc: string
-  onChangeDisplayData: (newDisplayData: DisplayData) => void
+  onCreateDisplayData: (newDisplayData: DisplayData) => void
 }
 
 const onMouseMove = () => {
@@ -28,7 +28,7 @@ const onMouseMove = () => {
 }
 
 export default function ImageContainer(props: Props) {
-  const { imageSrc, onChangeDisplayData } = props
+  const { imageSrc, onCreateDisplayData } = props
   const classes = useStyle()
   const containerRef = useRef<HTMLInputElement>(null)
 
@@ -56,8 +56,8 @@ export default function ImageContainer(props: Props) {
     }
     selectedAreas.push(newSelectArea)
     setSelectedAreas([...selectedAreas])
-    onChangeDisplayData({...newPosition, width, height})
-  }, [newPosition, selectedAreas, setSelectedAreas, onChangeDisplayData])
+    onCreateDisplayData({...newPosition, width, height})
+  }, [newPosition, selectedAreas, setSelectedAreas, onCreateDisplayData])
 
   return (
     <div ref={containerRef} className={classes.container} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>

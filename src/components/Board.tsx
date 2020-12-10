@@ -62,7 +62,7 @@ export default function Board() {
   }, [images, setImages]
   )
 
-  const onChangeDisplayData = useCallback((newDisplayData: DisplayData) => {
+  const onCreateDisplayData = useCallback((newDisplayData: DisplayData) => {
     displayData.push(newDisplayData)
     setDisplayData([...displayData])
   }, [displayData])
@@ -85,7 +85,7 @@ export default function Board() {
           />
         </div>
         <div>
-          <ImageList imageList={images} onChangeDisplayData={onChangeDisplayData}/>
+          <ImageList imageList={images} onCreateDisplayData={onCreateDisplayData}/>
         </div>
       </section>
       <section className={classes.dataBoard}>{JSON.stringify(displayData)}</section>

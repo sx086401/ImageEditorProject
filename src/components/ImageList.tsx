@@ -16,17 +16,17 @@ const useStyle = makeStyles({
 
 interface Props {
   imageList: string[]
-  onChangeDisplayData: (newDisplayData: DisplayData) => void
+  onCreateDisplayData: (newDisplayData: DisplayData) => void
 }
 
 export default function ImageList(props: Props) {
   const classes = useStyle()
-  const { imageList, onChangeDisplayData } = props
+  const { imageList, onCreateDisplayData } = props
 
   return (
     <div className={classes.list}>
       {imageList.map((image, index) =>
-        <ImageContainer key={index} imageSrc={image} onChangeDisplayData={onChangeDisplayData}/>)
+        <ImageContainer key={index} imageSrc={image} onCreateDisplayData={onCreateDisplayData}/>)
       }
     </div>
   )
