@@ -67,6 +67,14 @@ export default function Board() {
     setDisplayData([...displayData])
   }, [displayData])
 
+  const onDeleteDisplayData = useCallback((targetData: DisplayData) => {
+      const index = displayData.findIndex(data => data.x === targetData.x && data.y === targetData.y)
+      displayData.splice(index, 1)
+      setDisplayData([...displayData])
+    },
+    [displayData],
+  )
+
   return (
     <div className={classes.root}>
       <section className={classes.uploadBoard}>
@@ -85,7 +93,11 @@ export default function Board() {
           />
         </div>
         <div>
-          <ImageList imageList={images} onCreateDisplayData={onCreateDisplayData}/>
+          <ImageList
+            imageList={images}
+            onCreateDisplayData={onCreateDisplayData}
+            onDeleteDisplayData={onDeleteDisplayData}
+          />
         </div>
       </section>
       <section className={classes.dataBoard}>{JSON.stringify(displayData)}</section>
