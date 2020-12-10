@@ -24,30 +24,46 @@ interface Props {
   onDeleteDisplayData: (targetData: DisplayData) => void
 }
 
-const onMouseMove = () => {
-  // Draw the select area when dragging
-}
-
 export default function ImageContainer(props: Props) {
   const { imageSrc, onCreateDisplayData, onDeleteDisplayData } = props
   const classes = useStyle()
   const containerRef = useRef<HTMLInputElement>(null)
+  const offsetLeft = containerRef.current ? containerRef.current.offsetLeft : 0
+  const offsetTop = containerRef.current ? containerRef.current.offsetTop : 0
 
   const [newPosition, setNewPosition] = useState<Position>({x: 0, y: 0})
   const [selectedAreas, setSelectedAreas] = useState<SelectedArea[]>([])
+  const [previewPosition, setPreviewPosition] = useState<Position>({x: 0, y: 0})
+  const [isPreviewing, setIsPreviewing] = useState<boolean>(false)
+
+  const calculatePreviewArea = useCallback(() => {
+    return {
+      ...newPosition,
+      id: 0,
+      width: Math.abs(newPosition.x - previewPosition.x),
+      height: Math.abs(newPosition.y - previewPosition.y),
+      relativeX: Math.min(newPosition.x, previewPosition.x) - offsetLeft,
+      relativeY: Math.min(newPosition.y, previewPosition.y) - offsetTop,
+    }
+  }, [previewPosition, newPosition, offsetLeft, offsetTop])
+
+  const onMouseMove = useCallback(e => {
+    setPreviewPosition({x: e.pageX, y: e.pageY})
+    }, [setPreviewPosition]
+  )
 
   const onMouseDown = useCallback(e => {
     document.addEventListener('mousemove', onMouseMove)
+    setIsPreviewing(true)
     setNewPosition({x: e.pageX, y: e.pageY})
-  }, [setNewPosition])
+  }, [onMouseMove, setNewPosition, setIsPreviewing])
 
   const onMouseUp = useCallback(e => {
     document.removeEventListener('mousemove', onMouseMove)
-    if (newPosition.x !== e.pageX || newPosition.y !==  e.pageY) {
-      const width = Math.abs(newPosition.x - e.pageX)
-      const height = Math.abs(newPosition.y - e.pageY)
-      const offsetLeft = containerRef.current ? containerRef.current.offsetLeft : 0
-      const offsetTop = containerRef.current ? containerRef.current.offsetTop : 0
+    setIsPreviewing(false)
+    const width = Math.abs(newPosition.x - e.pageX)
+    const height = Math.abs(newPosition.y - e.pageY)
+    if (width >= 5 && height >= 5) {
       const newSelectArea = {
         ...newPosition,
         id: selectedAreas.length + 1,
@@ -60,7 +76,7 @@ export default function ImageContainer(props: Props) {
       setSelectedAreas([...selectedAreas])
       onCreateDisplayData({...newPosition, width, height})
     }
-  }, [newPosition, selectedAreas, setSelectedAreas, onCreateDisplayData])
+  }, [newPosition, selectedAreas, offsetLeft, offsetTop, onMouseMove, setSelectedAreas, onCreateDisplayData, setIsPreviewing])
 
   const onDelete = useCallback((targetArea: SelectedArea) => {
     document.removeEventListener('mousemove', onMouseMove)
@@ -69,15 +85,17 @@ export default function ImageContainer(props: Props) {
     setSelectedAreas([...selectedAreas])
     onDeleteDisplayData({...targetArea})
     },
-    [selectedAreas, setSelectedAreas, onDeleteDisplayData],
+    [selectedAreas, onMouseMove, setSelectedAreas, onDeleteDisplayData],
   )
 
   return (
     <div ref={containerRef} className={classes.container} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
       <img className={'image'} src={imageSrc} alt='img' onDragStart={e => e.preventDefault()}/>
       {selectedAreas.map(selectArea =>
-        <SelectedAreaBlock selectedArea={selectArea} onDelete={onDelete}/>
+        <SelectedAreaBlock key={selectArea.id} selectedArea={selectArea} onDelete={onDelete}/>
       )}
+      {/* {isPreviewing &&
+        <SelectedAreaBlock selectedArea={calculatePreviewArea()} onDelete={onDelete}/>} */}
     </div>
   )
 }
