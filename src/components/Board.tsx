@@ -12,6 +12,7 @@ const useStyle = makeStyles({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    alignContent: 'flex-start',
     height: 792,
     width: 433,
     backgroundColor: 'rgb(247, 248, 250)',
