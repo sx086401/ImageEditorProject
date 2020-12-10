@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core'
-import React from 'react'
+import { DropzoneArea } from 'material-ui-dropzone'
+import React, { useCallback, useState } from 'react'
+import ImageList from './ImageList'
 
 const useStyle = makeStyles({
   root: {
@@ -8,6 +10,8 @@ const useStyle = makeStyles({
   },
   uploadBoard: {
     display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     height: 792,
     width: 433,
     backgroundColor: 'rgb(247, 248, 250)',
@@ -24,8 +28,11 @@ const useStyle = makeStyles({
         backgroundColor: 'rgb(213, 218, 224)',
         marginLeft: 20,
         borderRadius: '100%'
-      }
-    }
+      },
+    },
+  },
+  uploader: {
+    width: 355,
   },
   dataBoard: {
     display: 'flex',
@@ -39,12 +46,37 @@ const useStyle = makeStyles({
 
 export default function Board() {
   const classes = useStyle()
+  const [images, setImages] = useState<any[]>([])
+
+  const onUpload = useCallback((uploadImages: Blob[]) => {
+    if (uploadImages.length > 0) {
+      const reader = new FileReader()
+      reader.readAsDataURL(uploadImages[uploadImages.length - 1])
+      reader.onloadend = function (e) {
+        setImages([...images, reader.result])
+      }
+    }
+  }, [images, setImages]
+  )
+
   return (
     <div className={classes.root}>
       <section className={classes.uploadBoard}>
         <div className={"header"}>
           <div className={"dot"}/>
         </div>
+        <div className={classes.uploader}>
+          <DropzoneArea
+            onChange={onUpload}
+            dropzoneText='Upload image'
+            showPreviews={false}
+            showPreviewsInDropzone={false}
+            previewText=''
+            filesLimit={4}
+            showAlerts={false}
+          />
+        </div>
+        <ImageList imageList={images}/>
       </section>
       <section className={classes.dataBoard}></section>
     </div>
