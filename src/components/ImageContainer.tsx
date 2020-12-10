@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import React, { useCallback, useRef, useState } from 'react'
-import { DisplayData } from '../model/displayData'
+import { DisplayData } from '../model/DisplayData'
 import { Position } from '../model/Position'
 import { SelectedArea } from '../model/SelectedArea'
 import SelectedAreaList from './SelectedAreaList'

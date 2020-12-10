@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core'
 import React from 'react'
-import { DisplayData } from '../model/displayData'
+import { DisplayData } from '../model/DisplayData'
 import ImageContainer from './ImageContainer'
 
 const useStyle = makeStyles({

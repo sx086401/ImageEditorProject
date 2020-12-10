@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core'
 import { DropzoneArea } from 'material-ui-dropzone'
 import React, { useCallback, useState } from 'react'
-import { DisplayData } from '../model/displayData'
+import { DisplayData } from '../model/DisplayData'
 import ImageList from './ImageList'
 
 const useStyle = makeStyles({
