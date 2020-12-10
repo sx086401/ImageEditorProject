@@ -32,7 +32,12 @@ export default function ImageList(props: Props) {
     <div className={classes.list}>
       {imageList.map((image, index) =>
         <div className={'container'} key={index}>
-          <img className={'image'} src={image} alt='img'></img>
+          <img
+            className={'image'}
+            src={image}
+            alt='img'
+            onDragStart={e => e.preventDefault()}
+          />
         </div>
       )}
     </div>

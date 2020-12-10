@@ -45,9 +45,15 @@ const useStyle = makeStyles({
   }
 })
 
+interface Position {
+  x: number,
+  y: number
+}
+
 export default function Board() {
   const classes = useStyle()
   const [images, setImages] = useState<any[]>([])
+  const [newPosition, setNewPosition] = useState<Position>({x: 0, y: 0})
 
   const onUpload = useCallback((uploadImages: Blob[]) => {
     if (uploadImages.length > 0) {
@@ -59,6 +65,19 @@ export default function Board() {
     }
   }, [images, setImages]
   )
+
+  const onMouseMove = () => {
+    console.log('move')
+  }
+
+  const onMouseDown = useCallback(e => {
+    document.addEventListener('mousemove', onMouseMove)
+    setNewPosition({x: e.screenX, y: e.screenY})
+  }, [setNewPosition])
+
+  const onMouseUp = useCallback(e => {
+    document.removeEventListener('mousemove', onMouseMove)
+  }, [])
 
   return (
     <div className={classes.root}>
@@ -77,9 +96,11 @@ export default function Board() {
             showAlerts={false}
           />
         </div>
-        <ImageList imageList={images}/>
+        <div onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+          <ImageList imageList={images}/>
+        </div>
       </section>
-      <section className={classes.dataBoard}></section>
+      <section className={classes.dataBoard}>{JSON.stringify(newPosition)}</section>
     </div>
   )
 }
