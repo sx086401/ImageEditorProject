@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core'
 import { DropzoneArea } from 'material-ui-dropzone'
 import React, { useCallback, useState } from 'react'
+import { DisplayData } from '../model/displayData'
 import ImageList from './ImageList'
 
 const useStyle = makeStyles({
@@ -45,15 +46,10 @@ const useStyle = makeStyles({
   }
 })
 
-interface Position {
-  x: number,
-  y: number
-}
-
 export default function Board() {
   const classes = useStyle()
   const [images, setImages] = useState<any[]>([])
-  const [newPosition, setNewPosition] = useState<Position>({x: 0, y: 0})
+  const [displayData, setDisplayData] = useState<DisplayData[]>([])
 
   const onUpload = useCallback((uploadImages: Blob[]) => {
     if (uploadImages.length > 0) {
@@ -66,18 +62,10 @@ export default function Board() {
   }, [images, setImages]
   )
 
-  const onMouseMove = () => {
-    console.log('move')
-  }
-
-  const onMouseDown = useCallback(e => {
-    document.addEventListener('mousemove', onMouseMove)
-    setNewPosition({x: e.screenX, y: e.screenY})
-  }, [setNewPosition])
-
-  const onMouseUp = useCallback(e => {
-    document.removeEventListener('mousemove', onMouseMove)
-  }, [])
+  const onChangeDisplayData = useCallback((newDisplayData: DisplayData) => {
+    displayData.push(newDisplayData)
+    setDisplayData([...displayData])
+  }, [displayData])
 
   return (
     <div className={classes.root}>
@@ -96,11 +84,11 @@ export default function Board() {
             showAlerts={false}
           />
         </div>
-        <div onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
-          <ImageList imageList={images}/>
+        <div>
+          <ImageList imageList={images} onChangeDisplayData={onChangeDisplayData}/>
         </div>
       </section>
-      <section className={classes.dataBoard}>{JSON.stringify(newPosition)}</section>
+      <section className={classes.dataBoard}>{JSON.stringify(displayData)}</section>
     </div>
   )
 }

@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core'
 import React from 'react'
+import { DisplayData } from '../model/displayData'
+import ImageContainer from './ImageContainer'
 
 const useStyle = makeStyles({
   list: {
@@ -9,37 +11,23 @@ const useStyle = makeStyles({
     width: 355,
     marginTop: 10,
     maxHeight: '100%',
-    '& .container': {
-      height: 200,
-      width: 170,
-      marginTop: 5,
-    },
-    '& .image': {
-      maxHeight: '100%',
-      maxWidth: '100%'
-    }
   },
 })
 
 interface Props {
   imageList: string[]
+  onChangeDisplayData: (newDisplayData: DisplayData) => void
 }
 
 export default function ImageList(props: Props) {
   const classes = useStyle()
-  const { imageList } = props
+  const { imageList, onChangeDisplayData } = props
+
   return (
     <div className={classes.list}>
       {imageList.map((image, index) =>
-        <div className={'container'} key={index}>
-          <img
-            className={'image'}
-            src={image}
-            alt='img'
-            onDragStart={e => e.preventDefault()}
-          />
-        </div>
-      )}
+        <ImageContainer key={index} imageSrc={image} onChangeDisplayData={onChangeDisplayData}/>)
+      }
     </div>
   )
 }
